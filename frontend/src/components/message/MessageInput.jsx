@@ -1,14 +1,14 @@
 import { Flex, Image, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Spinner, useDisclosure } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { IoSendSharp } from "react-icons/io5";
-import useShowToast from "../hooks/useShowToast";
+import useShowToast from "../../hooks/useShowToast";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   conversationAtom,
   selectedConversationAtom,
-} from "../atoms/messagesAtom";
+} from "../../atoms/messagesAtom";
 import { BsFillImageFill } from "react-icons/bs";
-import usePreviewImg from "../hooks/usePreviewImg";
+import usePreviewImg from "../../hooks/usePreviewImg";
 
 const MessageInput = ({ setMessages }) => {
   const [messageText, setMessageText] = useState("");

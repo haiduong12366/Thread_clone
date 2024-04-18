@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import UserHeader from "../components/UserHeader";
 import { useParams } from "react-router-dom";
-import useShowToast from "../hooks/useShowToast";
 import { Flex, Spinner } from "@chakra-ui/react";
-import Post from "../components/Post";
-import useGetUserProfile from "../hooks/useGetUserProfile";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { conversationAtom } from "../atoms/messagesAtom";
 import postAtom from "../atoms/postAtom";
+
+import useGetUserProfile from "../hooks/useGetUserProfile";
+import useShowToast from "../hooks/useShowToast";
+import { Post, UserHeader } from "../components";
 
 const UserPage = () => {
   const { user, loading } = useGetUserProfile();
@@ -14,6 +15,29 @@ const UserPage = () => {
   const showToast = useShowToast();
   const [posts, setPosts] = useRecoilState(postAtom)
   const [fetchingPosts, setFetchingPosts] = useState(true);
+
+  const setConversations = useSetRecoilState(conversationAtom);
+
+  useEffect(() => {
+    const getConversation = async () => {
+
+
+      try {
+        const res = await fetch("/api/messages/conversations");
+        const data = await res.json();
+        if (data.error) {
+          showToast("Error", data.error, "error");
+          return;
+        }
+        setConversations(data)
+
+      } catch (error) {
+        showToast("Error", error.message, "error");
+      }
+    };
+
+    getConversation()
+  }, [showToast, setConversations]);
 
   useEffect(() => {
     const getUserPost = async () => {

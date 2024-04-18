@@ -7,15 +7,17 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+
+import { useEffect, useRef, useState } from "react";
+
+import { conversationAtom, selectedConversationAtom } from "../../atoms/messagesAtom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import userAtom from "../../atoms/userAtom";
+import { useSocket } from "../../context/SocketContext";
+import messageSound from "../../assets/sounds/message.mp3"
+import useShowToast from "../../hooks/useShowToast";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
-import { useEffect, useRef, useState } from "react";
-import useShowToast from "../hooks/useShowToast";
-import { conversationAtom, selectedConversationAtom } from "../atoms/messagesAtom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import userAtom from "../atoms/userAtom";
-import { useSocket } from "../context/SocketContext";
-import messageSound from "../assets/sounds/message.mp3"
 
 const MessageContainer = () => {
   const showToast = useShowToast();
@@ -26,7 +28,7 @@ const MessageContainer = () => {
   const { socket } = useSocket();
   const messageEndRef = useRef(null)
   //const setConversations = useSetRecoilState(conversationAtom)
-  const [conversations, setConversations] = useRecoilState(conversationAtom);
+  const setConversations = useSetRecoilState(conversationAtom);
 
   useEffect(() => {
     socket.on("newMessage", (message) => {

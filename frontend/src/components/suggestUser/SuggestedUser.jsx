@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Flex, Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-import useHandleFollow from '../hooks/useHandleFollow'
+import useHandleFollow from '../../hooks/useHandleFollow'
 
 const SuggestedUser = ({ user }) => {
     const {handleFollow,updating,following} = useHandleFollow(user)

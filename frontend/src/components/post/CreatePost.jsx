@@ -19,12 +19,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import usePreviewImg from "../hooks/usePreviewImg";
+import usePreviewImg from "../../hooks/usePreviewImg";
 import { BsFillImageFill } from "react-icons/bs";
-import useShowToast from "../hooks/useShowToast";
+import useShowToast from "../../hooks/useShowToast";
 import { useRecoilState, useRecoilValue } from "recoil";
-import userAtom from "../atoms/userAtom";
-import postAtom from "../atoms/postAtom";
+import userAtom from "../../atoms/userAtom";
+import postAtom from "../../atoms/postAtom";
 import { useParams } from "react-router-dom";
 
 const CreatePost = () => {
@@ -40,7 +40,7 @@ const CreatePost = () => {
   const imgRef = useRef(null);
   const [h, setH] = useState("110px");
   const [posts, setPosts] = useRecoilState(postAtom);
-  
+  const inputRef = useRef(null);
 
   const handleTextChange = (e) => {
     const inputText = e.target.value;
@@ -98,7 +98,7 @@ const CreatePost = () => {
         bottom={10}
         right={5}
         bg={useColorModeValue("gray.300", "gray.dark")}
-        onClick={onOpen}
+        onClick={()=>{onOpen();inputRef.current.focus();}}
         size={{ base: "sm", sm: "md" }}
       >
         <AddIcon />
@@ -112,6 +112,8 @@ const CreatePost = () => {
             <ModalBody pb={6}>
               <FormControl>
                 <Textarea
+                  autoFocus
+                  ref={inputRef}
                   h={h}
                   overflow={"hidden"}
                   resize={"none"}

@@ -14,12 +14,12 @@ import {
 import { BsThreeDots, BsXSquare } from "react-icons/bs";
 import Actions from "./Actions";
 import { useEffect, useState } from "react";
-import useShowToast from "../hooks/useShowToast";
+import useShowToast from "../../hooks/useShowToast";
 import { formatDistanceToNow } from "date-fns";
 import { useRecoilState, useRecoilValue } from "recoil";
-import userAtom from "../atoms/userAtom";
+import userAtom from "../../atoms/userAtom";
 import { DeleteIcon } from "@chakra-ui/icons";
-import postAtom from "../atoms/postAtom";
+import postAtom from "../../atoms/postAtom";
 import { MdContentCopy } from "react-icons/md";
 
 const Post = ({ post, postedBy }) => {

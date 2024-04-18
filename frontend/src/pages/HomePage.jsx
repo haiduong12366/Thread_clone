@@ -1,38 +1,17 @@
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
-import Post from "../components/Post";
 import { useRecoilState } from "recoil";
 import postAtom from "../atoms/postAtom";
-import SuggestedUsers from "../components/SuggestedUsers";
-import { conversationAtom } from "../atoms/messagesAtom";
+
+import { Post, SuggestedUsers } from "../components";
+
 
 const HomePage = () => {
   const showToast = useShowToast();
   const [posts, setPosts] = useRecoilState(postAtom)
   const [loading, setLoading] = useState(false);
-  const [conversations, setConversations] = useRecoilState(conversationAtom);
-
-  useEffect(() => {
-    const getConversation = async () => {
-
-
-      try {
-        const res = await fetch("/api/messages/conversations");
-        const data = await res.json();
-        if (data.error) {
-          showToast("Error", data.error, "error");
-          return;
-        }
-        setConversations(data)
-
-      } catch (error) {
-        showToast("Error", error.message, "error");
-      }
-    };
-
-    getConversation()
-  }, [showToast, setConversations]);
+  
 
   useEffect(() => {
     const getFeedPosts = async () => {

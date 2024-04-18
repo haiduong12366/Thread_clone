@@ -15,19 +15,18 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import useShowToast from "../hooks/useShowToast";
-import userAtom from "../atoms/userAtom";
+import useShowToast from "../../hooks/useShowToast";
+import userAtom from "../../atoms/userAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import postAtom from "../atoms/postAtom";
+import postAtom from "../../atoms/postAtom";
 
 const Actions = ({ post }) => {
   const user = useRecoilValue(userAtom);
   const [liked, setLiked] = useState(post.likes.includes(user?._id));
   const [isLiking, setIsLiking] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
-  const [posts, setPosts] = useRecoilState(postAtom)
+  const [posts, setPosts] = useRecoilState(postAtom);
   const [reply, setReply] = useState("");
-
   const showToast = useShowToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -47,15 +46,14 @@ const Actions = ({ post }) => {
         showToast("Error", data.error, "error");
         return;
       }
-      const updatePost = posts.map(p =>{
-        if(post._id===p._id)
-          return {...p,replies:[...p.replies,data]}
-        return p
-      })
-      setPosts(updatePost)
+      const updatePost = posts.map((p) => {
+        if (post._id === p._id) return { ...p, replies: [...p.replies, data] };
+        return p;
+      });
+      setPosts(updatePost);
       showToast("Success", "Reply posted successfully", "success");
       onClose();
-      setReply("")
+      setReply("");
     } catch (error) {
       showToast("Error", error, "error");
     } finally {
@@ -67,7 +65,7 @@ const Actions = ({ post }) => {
     if (isLiking) return;
     if (!user)
       return showToast("Error", "You must be logged in to like post", "error");
-      setIsLiking(true);
+    setIsLiking(true);
     try {
       const res = await fetch("/api/posts/like/" + post._id, {
         method: "PUT",
@@ -79,19 +77,19 @@ const Actions = ({ post }) => {
         return;
       }
       if (!liked) {
-        const updatePost = posts.map(p =>{
-          if(post._id===p._id)
-            return {...p,likes:[...p.likes,user._id]}
-          return p
-        })
-        setPosts(updatePost)
+        const updatePost = posts.map((p) => {
+          if (post._id === p._id)
+            return { ...p, likes: [...p.likes, user._id] };
+          return p;
+        });
+        setPosts(updatePost);
       } else {
-        const updatePost = posts.map(p =>{
-          if(post._id===p._id)
-            return {...p,likes:p.likes.filter(id => id!==user._id)}
-          return p
-        })
-        setPosts(updatePost)
+        const updatePost = posts.map((p) => {
+          if (post._id === p._id)
+            return { ...p, likes: p.likes.filter((id) => id !== user._id) };
+          return p;
+        });
+        setPosts(updatePost);
       }
       setLiked(!liked);
     } catch (error) {
@@ -152,16 +150,17 @@ const Actions = ({ post }) => {
           {post.likes.length} likes
         </Text>
       </Flex>
-      
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <form onSubmit={handleReply}>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <form onSubmit={handleReply}>
           <ModalContent>
             <ModalHeader></ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl>
                 <Input
+                  autoFocus
                   placeholder="Your reply go here"
                   value={reply}
                   onChange={(e) => {
@@ -182,13 +181,10 @@ const Actions = ({ post }) => {
               >
                 Reply
               </Button>
-              
             </ModalFooter>
-            
           </ModalContent>
-          </form>
-        </Modal>
-      
+        </form>
+      </Modal>
     </Flex>
   );
 };

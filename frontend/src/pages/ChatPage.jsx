@@ -10,17 +10,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Conversation from "../components/Conversation";
-import MessageContainer from "../components/MessageContainer";
-import useShowToast from "../hooks/useShowToast";
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  conversationAtom,
-  selectedConversationAtom,
-} from "../atoms/messagesAtom";
-import { GiConversation } from "react-icons/gi";
+import {conversationAtom,selectedConversationAtom,} from "../atoms/messagesAtom";
 import userAtom from "../atoms/userAtom";
+import { GiConversation } from "react-icons/gi";
 import { useSocket } from "../context/SocketContext";
+import useShowToast from "../hooks/useShowToast";
+import { Conversation, MessageContainer } from "../components";
 
 const ChatPage = () => {
   const { onlineUsers, socket } = useSocket();

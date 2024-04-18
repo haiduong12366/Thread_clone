@@ -14,9 +14,7 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import { BsThreeDots } from "react-icons/bs";
-import Actions from "../components/Actions";
 import { useEffect, useState } from "react";
-import Comment from "../components/Comment";
 import useShowToast from "../hooks/useShowToast";
 import useGetUserProfile from "../hooks/useGetUserProfile";
 import { Navigate, useParams } from "react-router-dom";
@@ -25,6 +23,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import postAtom from "../atoms/postAtom";
+import { Actions, Comment } from "../components";
 
 const PostPage = () => {
   const { user, loading } = useGetUserProfile();

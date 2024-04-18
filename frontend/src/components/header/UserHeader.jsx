@@ -14,12 +14,12 @@ import {
 } from "@chakra-ui/react";
 import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
-import useShowToast from "../hooks/useShowToast";
-import userAtom from "../atoms/userAtom";
+import useShowToast from "../../hooks/useShowToast";
+import userAtom from "../../atoms/userAtom";
 import { useRecoilValue } from "recoil";
 import { Link as RouterLink } from "react-router-dom"
-import useHandleFollow from "../hooks/useHandleFollow";
-import { useSocket } from "../context/SocketContext";
+import useHandleFollow from "../../hooks/useHandleFollow";
+import { useSocket } from "../../context/SocketContext";
 
 
 const UserHeader = ({ user }) => {
