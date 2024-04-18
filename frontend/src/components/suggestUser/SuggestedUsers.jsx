@@ -29,7 +29,7 @@ const SuggestedUsers = () => {
     },[showToast])
 
     return (
-        <><Text mb={4} fontWeight={"bold"}>
+        <><Text mb={4} fontWeight={"bold"} textAlign={"left"}>
             Suggested Users
         </Text>
             <Flex direction={"column"} gap={4}>
