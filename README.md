@@ -1,2 +1,3 @@
 https://thread-clonee-mja8.onrender.com
-![image](https://github.com/haiduong12366/Thread_clone/assets/130330980/e861a3e2-fc6e-4514-84c7-af79a1677436)
+![image](https://github.com/haiduong12366/Thread_clone/assets/130330980/caa16bbf-4512-47c9-8ffb-0d5d3c2815fb)
+![image](https://github.com/haiduong12366/Thread_clone/assets/130330980/52840ea5-5e85-40fc-b210-a25b171a8f13)
