@@ -24,6 +24,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
 import postAtom from "../atoms/postAtom";
 import { Actions, Comment } from "../components";
+import { RiLogoutBoxLine } from "react-icons/ri";
+import { useNavigate} from "react-router-dom";
+
 
 const PostPage = () => {
   const { user, loading } = useGetUserProfile();
@@ -32,7 +35,7 @@ const PostPage = () => {
   const [fetchingPosts, setFetchingPosts] = useState(true);
   const currentUser = useRecoilValue(userAtom);
   const [posts, setPosts] = useRecoilState(postAtom)
-
+  let navigate = useNavigate();
   const currentPost = posts[0];
   useEffect(() => {
     const getUserPost = async () => {
@@ -93,6 +96,11 @@ const PostPage = () => {
 
   return (
     <>
+    <Flex position={"absolute"} left={-200} top={0}>
+      <Button onClick={() => navigate(-1)}>
+      <RiLogoutBoxLine size={35}/></Button>
+      </Flex>
+    
       <Flex>
         <Flex w={"full"} alignItems={"center"} gap={3}>
           <Avatar
