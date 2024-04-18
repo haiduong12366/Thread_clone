@@ -19,27 +19,26 @@ import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authAtom.js";
 import useShowToast from "../../hooks/useShowToast.js";
 import userAtom from "../../atoms/userAtom.js";
-// import authScreenAtom from "../atoms/authAtom";
-// import useShowToast from "../hooks/useShowToast";
-// import userAtom from "../atoms/userAtom";
+import { PiWarningBold } from "react-icons/pi";
 
 export default function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
   const setAuthScreen = useSetRecoilState(authScreenAtom);
   const showToast = useShowToast();
   const setUser = useSetRecoilState(userAtom);
-  const [isLoading,setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
+  const [hide,setHide] = useState(true)
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if(isLoading) return
+    if (isLoading) return
     setIsLoading(true)
     try {
-      
+
       const res = await fetch("/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -55,7 +54,7 @@ export default function LoginCard() {
       setIsLoading(false)
     } catch (error) {
       showToast("Error", error, "error");
-    }finally{
+    } finally {
       setIsLoading(false)
     }
   };
@@ -91,6 +90,16 @@ export default function LoginCard() {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    onKeyUp={(e)=>{
+                      if(e.getModifierState("CapsLock"))
+                      {
+                        setHide(false)
+                      }
+                      else{
+                        setHide(true)
+                      }
+                      
+                    }}
                     type={showPassword ? "text" : "password"}
                     onChange={(e) => {
                       setInputs({ ...inputs, password: e.target.value });
@@ -109,17 +118,23 @@ export default function LoginCard() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              <Flex flexDirection={"row"} position={"relative"} hidden={hide}>
+                <PiWarningBold color="yellow" />
+                <Text  top={-1} position={"absolute"} left={6}> Caplock is on</Text>
+
+              </Flex>
+
               <Stack spacing={10} pt={2}>
                 <Button
-                  type={!isLoading ? "submit":"button"}
-                  isLoading = {isLoading}
+                  type={!isLoading ? "submit" : "button"}
+                  isLoading={isLoading}
                   size="lg"
                   bg={useColorModeValue("gray.600", "gray.700")}
                   color={"white"}
                   _hover={{
                     bg: useColorModeValue("gray.700", "gray.800"),
                   }}
-                  
+
                 >
                   Login
                 </Button>

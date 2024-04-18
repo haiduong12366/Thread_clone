@@ -9,12 +9,14 @@ import {
   useColorModeValue,
   Avatar,
   Center,
+  Text,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom.js";
 import usePreviewImg from "../hooks/usePreviewImg.js";
 import useShowToast from "../hooks/useShowToast.js";
+import { PiWarningBold } from "react-icons/pi";
 
 export default function UpdateProfilePage() {
   const [user, setUser] = useRecoilState(userAtom);
@@ -28,6 +30,8 @@ export default function UpdateProfilePage() {
     bio: user.bio,
   });
   const fileRef = useRef(null);
+  const [hide,setHide] = useState(true)
+
   const { handleImageChange, imgUrl } = usePreviewImg();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -152,6 +156,16 @@ export default function UpdateProfilePage() {
           <FormControl>
             <FormLabel>Password</FormLabel>
             <Input
+            onKeyUp={(e)=>{
+              if(e.getModifierState("CapsLock"))
+              {
+                setHide(false)
+              }
+              else{
+                setHide(true)
+              }
+              
+            }}
               placeholder="password"
               _placeholder={{ color: "gray.500" }}
               type="password"
@@ -161,6 +175,11 @@ export default function UpdateProfilePage() {
               value={inputs.password}
             />
           </FormControl>
+          <Flex flexDirection={"row"} position={"relative"} hidden={hide}>
+                <PiWarningBold color="yellow" />
+                <Text  top={-1} position={"absolute"} left={6}> Caplock is on</Text>
+
+              </Flex>
           <Stack spacing={6} direction={["column", "row"]}>
             <Button
               bg={"red.400"}

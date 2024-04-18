@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import authScreenAtom from "../../atoms/authAtom.js";
 import useShowToast from "../../hooks/useShowToast.js";
+import { PiWarningBold } from "react-icons/pi";
 
 
 export default function SignupCard() {
@@ -31,6 +32,7 @@ export default function SignupCard() {
     email: "",
     password: "",
   });
+  const [hide,setHide] = useState(true)
 
   const showToast = useShowToast();
   const handleSignUp = async (e) => {
@@ -114,6 +116,16 @@ export default function SignupCard() {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                  onKeyUp={(e)=>{
+                    if(e.getModifierState("CapsLock"))
+                    {
+                      setHide(false)
+                    }
+                    else{
+                      setHide(true)
+                    }
+                    
+                  }}
                     type={showPassword ? "text" : "password"}
                     onChange={(e) => {
                       setInputs({ ...inputs, password: e.target.value });
@@ -132,6 +144,11 @@ export default function SignupCard() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              <Flex flexDirection={"row"} position={"relative"} hidden={hide}>
+                <PiWarningBold color="yellow" />
+                <Text  top={-1} position={"absolute"} left={6}> Caplock is on</Text>
+
+              </Flex>
               <Stack spacing={10} pt={2}>
                 <Button
                 isLoading={isLoading}
